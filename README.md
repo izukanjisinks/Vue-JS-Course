@@ -55,7 +55,7 @@ Each major section of the course is organized into its own branch for better cod
 
 ```bash
 # Clone repository
-git clone https://github.com/Izukanji-Sinkolongo/vue-course-journey.git
+git clone https://github.com/izukanjisinks/Vue-JS-Course.git
 
 # Switch to a section
 git checkout 01-vue-basics
