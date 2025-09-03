@@ -1,19 +1,19 @@
 <template>
     <BaseCard>
-        <form action="">
+        <form action="" @submit.prevent="submitData">
             <div class="form-control">       
                 <label for="title">Title</label>
-                <input id="title" name="title" type="text">
+                <input id="title" name="title" type="text" ref="titleInput">
             </div>
 
              <div class="form-control">       
                 <label for="description">Description</label>
-                <textarea name="description" id="description" rows="3"></textarea>
+                <textarea name="description" id="description" rows="3" ref="descInput"></textarea>
             </div>
             
             <div class="form-control">       
                 <label for="link">Link</label>
-                <input id="link" name="link" type="text">
+                <input id="link" name="link" type="text" ref="linkInput">
             </div>
 
             <div>  
@@ -27,6 +27,22 @@
         </form>
     </BaseCard>
 </template>
+
+<script>
+export default {
+    inject: ['addResource'],
+
+    methods: {
+      submitData() {
+        const enteredTitle = this.$refs.titleInput.value;
+        const enteredDesc = this.$refs.descInput.value;
+        const enteredLink = this.$refs.linkInput.value; 
+
+        this.addResource(enteredTitle, enteredDesc, enteredLink);
+      }  
+    },
+}
+</script>
 
 <style scoped>
     label {
