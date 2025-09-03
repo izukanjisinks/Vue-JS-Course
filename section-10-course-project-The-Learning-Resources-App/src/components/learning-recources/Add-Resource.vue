@@ -1,4 +1,15 @@
 <template>
+    <BaseDialog v-if="inputIsInvalid" title="Invalid Input!" @close="confirmError">
+        <!-- targetting the default slot with no name -->
+        <template #default>
+            <p>One input value is invalid.</p>
+            <p>Enter all inputs</p>
+        </template>
+        <!-- targetting the slot with name 'actions' -->
+        <template #actions>
+            <BaseButton @click="confirmError" >Okay</BaseButton>
+        </template>
+    </BaseDialog>
     <BaseCard>
         <form action="" @submit.prevent="submitData">
             <div class="form-control">       
@@ -32,13 +43,32 @@
 export default {
     inject: ['addResource'],
 
+    data() {
+        return {
+            inputIsInvalid: false
+            }
+    },
+
     methods: {
       submitData() {
         const enteredTitle = this.$refs.titleInput.value;
         const enteredDesc = this.$refs.descInput.value;
         const enteredLink = this.$refs.linkInput.value; 
 
+        //trim removes whitespace from both ends of a string and actuall blank input that's entered
+        if(enteredTitle.trim() === '' || 
+           enteredDesc.trim() === '' || 
+           enteredLink.trim() === '') {
+            // add more validation here
+            this.inputIsInvalid = true;
+            //stop the function from continuing here
+            return;
+        }
+
         this.addResource(enteredTitle, enteredDesc, enteredLink);
+      },
+      confirmError() {
+        this.inputIsInvalid = false;
       }  
     },
 }

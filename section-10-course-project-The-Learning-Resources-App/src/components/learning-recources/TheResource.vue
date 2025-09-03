@@ -45,7 +45,8 @@ export default {
     provide() {
         return {
             resources: this.resources,
-            addResource: this.addResource
+            addResource: this.addResource,
+            deleteResource: this.removeResource
         }
     },
 
@@ -71,6 +72,15 @@ export default {
             };
         this.resources.unshift(newResource);
         this.selectedTab = 'Resources';
+        },
+        removeResource(resId) {
+            const index = this.resources.findIndex(res => res.id === resId);
+            this.resources.splice(index);
+            // the code below doesn't work
+            //beacuse we are override the existing array
+            //instead of directly modifying it as shown above
+            //this.resources = this.resources.filter(res => res.id !== resId);
+            //console.log(this.resources);
         }
     }
 }

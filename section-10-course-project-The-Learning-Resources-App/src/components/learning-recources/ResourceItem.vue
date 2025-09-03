@@ -4,7 +4,7 @@
             
           <header>
               <h3>{{ title}}</h3>
-              <BaseButton mode="flat" >Delete</BaseButton>
+              <BaseButton mode="flat" @click="deleteResource(id)" >Delete</BaseButton>
           </header>
           
           <p>{{ description }}</p>
@@ -22,7 +22,8 @@
 export default {
     // props are available as if they were data
     // registered in the data part
-    props: ['title', 'description', 'link']
+    props: ['id','title', 'description', 'link'],
+    inject: ['deleteResource']
 }
 </script>
 
