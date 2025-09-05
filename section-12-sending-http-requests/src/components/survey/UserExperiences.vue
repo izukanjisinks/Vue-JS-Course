@@ -3,9 +3,9 @@
     <base-card>
       <h2>Submitted Experiences</h2>
       <div>
-        <base-button>Load Submitted Experiences</base-button>
+        <base-button @click="loadExperiences">Load Submitted Experiences</base-button>
       </div>
-      <ul>
+      <ul v-if="!isLoading && results && results.length > 0">
         <survey-result
           v-for="result in results"
           :key="result.id"
@@ -13,6 +13,12 @@
           :rating="result.rating"
         ></survey-result>
       </ul>
+      <p v-else-if="!results || results.length === 0">
+        No experiences found!
+      </p>
+      <p v-else>
+        Loading...
+      </p>
     </base-card>
   </section>
 </template>
@@ -21,10 +27,40 @@
 import SurveyResult from './SurveyResult.vue';
 
 export default {
-  props: ['results'],
+  data() {
+    return{
+      results: [],
+      isLoading: false
+    }
+  },
   components: {
     SurveyResult,
   },
+  methods: {
+    loadExperiences() {
+      this.isLoading = true;
+       fetch('https://vue-http-demo-aaae6-default-rtdb.firebaseio.com/serverys.json').then((response) => {
+        if(response.ok){
+          return response.json();
+          }
+        }
+       ).then((data) => {
+        const results = [];
+        for (const id in data) {
+          results.push({
+            id: id,
+            name: data[id].name,
+            rating: data[id].rating
+          });
+        }
+        this.results = results;
+        this.isLoading = false;
+       });
+    }
+  },
+  mounted() {
+    this.loadExperiences();
+  }
 };
 </script>
 
