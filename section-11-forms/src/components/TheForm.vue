@@ -1,10 +1,11 @@
 <template>
   <form @submit.prevent="submitForm">
-    <div class="form-control">
+    <div class="form-control" :class="{invalid: userNameValid === 'invalid'}">
       <label for="user-name">Your Name</label>
       <!-- v-model allows view to keep track of what we enter
            with every key strock -->
-      <input id="user-name" name="user-name" type="text" v-model="userName"/>
+      <input id="user-name" name="user-name" type="text" v-model.trim="userName" @blur="validateInput"/>
+      <p v-if="userNameValid === 'invalid'">please enter a valid name</p>
     </div>
     <div class="form-control">
       <label for="age">Your Age (Years)</label>
@@ -52,6 +53,9 @@
       </div>
     </div>
     <div class="form-control">
+      <RatingControl v-model="rating" ></RatingControl>
+    </div>
+    <div class="form-control">
       <input type="checkbox" id="confirm-terms" name="confirm-terms" v-model="confirm" />
       <label for="confirm-terms">Agree to terms of use</label>
     </div>
@@ -62,7 +66,15 @@
 </template>
 
 <script>
+import RatingControl from './RatingControl.vue';
+
+
 export default {
+
+ components: {
+  RatingControl
+ },
+
   data(){
     return {
       userName: '',
@@ -70,7 +82,9 @@ export default {
       referrer: 'newspaper',
       interest: [],
       how: [],
-      confirm: false
+      confirm: false,
+      userNameValid: 'pending',
+      rating: 'poor'
     }
   },
 
@@ -92,6 +106,15 @@ export default {
       this.interest = [];
       console.log('Confirm: ' + this.confirm);
       this.confirm = false;
+      console.log('Rating: ' + this.rating);
+      this.rating = 'poor';
+    },
+    validateInput() {
+      if(this.userName.trim() === ''){
+        this.userNameValid = 'invalid';
+      } else {
+        this.userNameValid = 'valid';  
+      }
     }
   }
 }
@@ -109,6 +132,14 @@ form {
 
 .form-control {
   margin: 0.5rem 0;
+}
+
+.form-control.invalid input {
+  border-color: red;
+}
+
+.form-control.invalid label {
+  border-color: red;
 }
 
 label {
