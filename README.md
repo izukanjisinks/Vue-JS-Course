@@ -73,8 +73,8 @@ npm run serve
 - [x] Reactive Data & Events
 - [x] DOM Interaction
 - [x] Components
-- [ ] Forms & HTTP
-- [ ] Routing & SPA
+- [x] Forms & HTTP
+- [x] Routing & SPA
 - [ ] State Management
 - [ ] Deployment
 
