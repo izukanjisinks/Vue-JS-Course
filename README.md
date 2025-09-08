@@ -74,7 +74,7 @@ npm run serve
 - [x] DOM Interaction
 - [x] Components
 - [x] Forms & HTTP
-- [ ] Routing & SPA
+- [x] Routing & SPA
 - [ ] State Management
 - [ ] Deployment
 
