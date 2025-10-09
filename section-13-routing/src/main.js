@@ -17,6 +17,20 @@ const router = createRouter({
     { path: '/teams/:teamId', component: TeamMembers },
     { path: '/:notFound(.*)', component: NotFound}
   ],
+  scrollBehavior(to, from, savedPosition) {
+    console.log(to, from, savedPosition);
+    if (savedPosition) {
+      return savedPosition;
+    }
+    return {left: 0, top: 0}
+  }
+});
+
+// called before each navigation
+router.beforeEach(function (to, from, next){
+  console.log('Global beforeEach');
+  console.log(to, from);
+  next();
 });
 
 const app = createApp(App)
