@@ -81,7 +81,7 @@ npm run serve
 **Projects:**
 - [ ] Monster Slayer Game
 - [x] Learning Resources App
-- [ ] Find a Coach App
+- [x] Find a Coach App
 
 ---
 
